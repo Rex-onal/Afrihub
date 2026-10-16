@@ -14,14 +14,25 @@ dotenv.config();
 
 export const app: Express = express();
 
+// Trust proxy for reverse proxies and IP resolution
+app.set('trust proxy', 1);
+
 // Security headers
 app.use(helmet());
 
-// Cross-Origin Resource Sharing locked strictly to CLIENT_ORIGIN
-const clientOrigin = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+// Cross-Origin Resource Sharing locked strictly to CLIENT_ORIGIN (dev: 5173, preview: 4173)
+const configuredOrigins = process.env.CLIENT_ORIGIN
+  ? process.env.CLIENT_ORIGIN.split(',').map((o) => o.trim())
+  : ['http://localhost:5173', 'http://localhost:4173'];
+
 app.use(
   cors({
-    origin: clientOrigin,
+    origin: (origin, callback) => {
+      if (!origin || configuredOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+    },
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
   })

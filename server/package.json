@@ -8,7 +8,7 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit",
-    "test": "tsx scripts/run-phase6-test.ts"
+    "test": "vitest run"
   },
   "dependencies": {
     "@afrihub/shared": "*",
@@ -28,6 +28,7 @@
     "@types/supertest": "^7.2.1",
     "drizzle-kit": "^0.31.11",
     "supertest": "^7.3.1",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.5"
   }
 }

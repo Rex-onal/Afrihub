@@ -17,7 +17,11 @@
     "build": "npm run build --workspace=@afrihub/shared && npm run build --workspace=@afrihub/client && npm run build --workspace=@afrihub/server",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
     "typecheck": "npm run typecheck --workspace=@afrihub/shared && npm run typecheck --workspace=@afrihub/client && npm run typecheck --workspace=@afrihub/server",
-    "test": "npm run test --workspace=@afrihub/client && npm run test --workspace=@afrihub/server",
+    "test": "npm run test:client && npm run test:server",
+    "test:client": "npm run test --workspace=@afrihub/client",
+    "test:server": "npm run test --workspace=@afrihub/server",
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "preview": "npm run build && USE_TEST_DB=true concurrently -n \"server,client\" -c \"magenta,cyan\" \"npm run start --workspace=@afrihub/server\" \"npm run preview --workspace=@afrihub/client -- --port 4173 --host\"",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "devDependencies": {

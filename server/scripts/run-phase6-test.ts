@@ -135,16 +135,17 @@ async function runTests() {
   console.log('\n[7/7] Proving Postgres rejects an invalid enum value...');
   let pgEnumRejected = false;
   try {
-    const neonSql = (db as any).$client;
+    const neonSql = (db as unknown as { $client: (strings: TemplateStringsArray, ...values: unknown[]) => Promise<unknown> }).$client;
     await neonSql`
       INSERT INTO community_members (full_name, email, country, track, experience_level, interests)
       VALUES ('Hacker', 'invalid-enum@example.com', 'NG', 'invalid_track'::track, 'junior', ARRAY['hackathons'::interest]);
     `;
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const pgErr = err as { code?: string; message?: string };
     pgEnumRejected = true;
     console.log(`✓ Postgres rejected invalid enum as expected!`);
-    console.log(`  Postgres Error Code: ${err.code}`);
-    console.log(`  Postgres Error Message: ${err.message}`);
+    console.log(`  Postgres Error Code: ${pgErr.code}`);
+    console.log(`  Postgres Error Message: ${pgErr.message}`);
   }
   if (!pgEnumRejected) {
     throw new Error('Postgres failed to reject invalid enum value!');

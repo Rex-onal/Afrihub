@@ -33,8 +33,12 @@ joinRouter.post('/join', async (req: Request, res: Response, next: NextFunction)
       message: 'Welcome to AfriHub! Your community registration has been confirmed.',
     });
   } catch (error) {
-    const rootErr = (error as any)?.cause || error;
-    if (rootErr?.code === '23505') {
+    const rootErr =
+      error && typeof error === 'object' && 'cause' in error
+        ? (error as { cause: unknown }).cause
+        : error;
+    const pgErr = rootErr as { code?: string } | null;
+    if (pgErr?.code === '23505') {
       res.status(409).json({
         error: 'This email is already registered with AfriHub. Contact us if you need help.',
       });

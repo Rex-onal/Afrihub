@@ -17,8 +17,11 @@ export function errorHandler(
   }
 
   // Handle Postgres Unique Constraint Violation (Code 23505)
-  const rootErr = (err as any)?.cause || err;
-  const pgErr = rootErr as { code?: string; message?: string };
+  const rootErr =
+    err && typeof err === 'object' && 'cause' in err
+      ? (err as { cause: unknown }).cause
+      : err;
+  const pgErr = rootErr as { code?: string; message?: string } | null;
   if (pgErr?.code === '23505') {
     res.status(409).json({
       error: 'This email is already registered with AfriHub. Contact us if you need help.',

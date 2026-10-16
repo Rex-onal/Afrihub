@@ -20,18 +20,21 @@ app.set('trust proxy', 1);
 // Security headers
 app.use(helmet());
 
-// Cross-Origin Resource Sharing locked strictly to CLIENT_ORIGIN (dev: 5173, preview: 4173)
-const configuredOrigins = process.env.CLIENT_ORIGIN
+// Cross-Origin Resource Sharing locked to CLIENT_ORIGIN (always allowing dev: 5173 and preview: 4173)
+const customOrigins = process.env.CLIENT_ORIGIN
   ? process.env.CLIENT_ORIGIN.split(',').map((o) => o.trim())
-  : ['http://localhost:5173', 'http://localhost:4173'];
+  : [];
+const allowedOrigins = Array.from(
+  new Set(['http://localhost:5173', 'http://localhost:4173', ...customOrigins])
+);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || configuredOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-      return callback(new Error(`Origin ${origin} not allowed by CORS`));
+      return callback(null, false);
     },
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],

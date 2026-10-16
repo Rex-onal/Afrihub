@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Direct all database operations strictly to the TEST branch
-process.env.DATABASE_URL = process.env.DATABASE_URL_TEST;
+process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
 
 import request from 'supertest';
 import { app } from '../src/app.js';
@@ -12,7 +12,7 @@ import { eq } from 'drizzle-orm';
 
 async function runTests() {
   console.log('--- STARTING PHASE 6 NEON TEST SUITE (TEST BRANCH ONLY) ---');
-  const db = createDb(process.env.DATABASE_URL_TEST);
+  const db = createDb(process.env.TEST_DATABASE_URL);
 
   // 1. Health check test
   console.log('\n[1/6] Testing GET /api/health...');

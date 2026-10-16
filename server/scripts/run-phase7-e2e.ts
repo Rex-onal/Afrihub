@@ -7,7 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 dotenv.config();
 
 // Ensure we test against Neon TEST branch
-process.env.DATABASE_URL = process.env.DATABASE_URL_TEST;
+process.env.DATABASE_URL = process.env.TEST_DATABASE_URL;
 
 import { createDb } from '../src/db/client.js';
 import { communityMembers, partnerEnquiries, contactMessages } from '../src/db/schema.js';
@@ -18,7 +18,7 @@ const API_URL = 'http://localhost:4000';
 async function runE2E() {
   console.log('=== PHASE 7 FULL-STACK LIVE E2E VERIFICATION (NEON TEST BRANCH) ===\n');
 
-  const db = createDb(process.env.DATABASE_URL_TEST);
+  const db = createDb(process.env.TEST_DATABASE_URL);
 
   // 1. Verify API server health
   console.log('[1/7] Checking API server health...');

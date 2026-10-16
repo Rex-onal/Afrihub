@@ -1,5 +1,6 @@
 import React from 'react';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Card } from '../components/ui/Card';
 import { JoinCtaSection } from '../components/sections/JoinCtaSection';
@@ -57,16 +58,10 @@ const CITY_HUBS = [
 export const AboutPage: React.FC = () => {
   return (
     <PageWrapper>
-      {/* Per-page SEO & Meta tags */}
-      <title>About Us | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="Learn about AfriHub's mission to empower pan-African tech talent through events, hackathons, scholarships, and verified career pathways across 54 nations."
-      />
-      <meta property="og:title" content="About Us | AfriHub Tech Community" />
-      <meta
-        property="og:description"
-        content="Our story, mission, core values, and the fictional leadership team powering AfriHub."
+      <SEO
+        title="About Us"
+        description="Learn about AfriHub's mission to empower pan-African tech talent through events, hackathons, scholarships, and verified career pathways across 54 nations."
+        path="/about"
       />
 
       {/* Hero Section */}

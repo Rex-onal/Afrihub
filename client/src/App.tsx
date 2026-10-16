@@ -30,8 +30,16 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <div className="min-h-screen flex flex-col bg-[#FCF9F8] text-[#1C1B1B] selection:bg-[#F5A623]/30 selection:text-[#1C1B1B]">
+        {/* Accessible Skip to content link */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-[#1C1B1B] focus:text-white focus:rounded-lg focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#835500] font-medium text-sm transition-transform"
+        >
+          Skip to content
+        </a>
+
         <Navbar />
-        <div className="flex-1">
+        <main id="main-content" className="flex-1 outline-none" tabIndex={-1}>
           <Suspense fallback={<RouteLoading />}>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -52,7 +60,7 @@ export const App: React.FC = () => {
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
-        </div>
+        </main>
         <Footer />
       </div>
     </BrowserRouter>

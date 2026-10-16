@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Section } from '../components/layout/Section';
 import { Button } from '../components/ui/Button';
@@ -9,10 +10,10 @@ import { Compass, Home, Calendar, Users } from 'lucide-react';
 export const NotFoundPage: React.FC = () => {
   return (
     <PageWrapper>
-      <title>Page Not Found (404) | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="The page you are looking for does not exist on AfriHub. Explore our upcoming events, join the community, or return home."
+      <SEO
+        title="Page Not Found (404)"
+        description="The page you are looking for does not exist on AfriHub. Explore our upcoming events, join the community, or return home."
+        noindex={true}
       />
 
       <Section className="py-24 text-center">

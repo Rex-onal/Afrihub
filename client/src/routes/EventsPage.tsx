@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -32,16 +33,10 @@ export const EventsPage: React.FC = () => {
 
   return (
     <PageWrapper>
-      {/* Per-page SEO & Meta tags */}
-      <title>Technical Events & Summits | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="Discover upcoming pan-African hackathons, developer bootcamps, and tech leadership summits. Free showcase access for community members across 54 nations."
-      />
-      <meta property="og:title" content="Technical Events & Summits | AfriHub Tech Community" />
-      <meta
-        property="og:description"
-        content="Upcoming and past showcase events uniting builders across Africa."
+      <SEO
+        title="Technical Events & Summits"
+        description="Discover upcoming pan-African hackathons, developer bootcamps, and tech leadership summits. Free showcase access for community members across 54 nations."
+        path="/events"
       />
 
       {/* Hero Section */}

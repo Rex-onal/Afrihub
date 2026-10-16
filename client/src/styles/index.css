@@ -88,3 +88,21 @@
     color: var(--color-primary);
   }
 }
+
+/* Accessible focus visible indicators across interactive elements */
+:focus-visible {
+  outline: 2px solid #835500;
+  outline-offset: 2px;
+}
+
+/* Site-wide prefers-reduced-motion override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

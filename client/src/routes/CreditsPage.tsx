@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Card } from '../components/ui/Card';
 
@@ -83,16 +84,10 @@ const ASSET_CREDITS: AssetCredit[] = [
 export const CreditsPage: React.FC = () => {
   return (
     <PageWrapper>
-      {/* Per-page SEO & Meta tags */}
-      <title>Asset & Photo Credits | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="Legal attribution, source links, and open license terms for photography and map assets utilized across the AfriHub website."
-      />
-      <meta property="og:title" content="Asset & Photo Credits | AfriHub Tech Community" />
-      <meta
-        property="og:description"
-        content="Attributions and licensing details for photography and map assets on AfriHub."
+      <SEO
+        title="Asset & Photo Credits"
+        description="Legal attribution, source links, and open license terms for photography and map assets utilized across the AfriHub website."
+        path="/credits"
       />
 
       <section className="py-16 md:py-24">

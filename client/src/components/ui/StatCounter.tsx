@@ -75,8 +75,10 @@ export const StatCounter: React.FC<StatCounterProps> = ({
     <div
       ref={containerRef}
       className={cn('flex flex-col', className)}
-      aria-label={`${value} ${label || ''}`.trim()}
     >
+      <span className="sr-only">
+        {value} {label || ''}
+      </span>
       <span
         aria-hidden="true"
         className={cn(
@@ -88,6 +90,7 @@ export const StatCounter: React.FC<StatCounterProps> = ({
       </span>
       {label && (
         <span
+          aria-hidden="true"
           className={cn(
             'text-xs sm:text-sm font-medium text-[#524534] mt-1 uppercase tracking-wider',
             labelClassName

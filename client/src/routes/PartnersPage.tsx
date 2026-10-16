@@ -1,5 +1,6 @@
 import React from 'react';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -107,16 +108,10 @@ export const PartnersPage: React.FC = () => {
 
   return (
     <PageWrapper>
-      {/* Per-page SEO & Meta tags */}
-      <title>Partners & Investors | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="Invest in Africa's tech future. Sponsor hackathons, fund scholarships, and recruit vetted engineering leaders across 54 nations."
-      />
-      <meta property="og:title" content="Partners & Investors | AfriHub Tech Community" />
-      <meta
-        property="og:description"
-        content="Empower African developers through strategic corporate partnerships and scholarship sponsorships."
+      <SEO
+        title="Partners & Investors"
+        description="Invest in Africa's tech future. Sponsor hackathons, fund scholarships, and recruit vetted engineering leaders across 54 nations."
+        path="/partners"
       />
 
       {/* Hero Section */}

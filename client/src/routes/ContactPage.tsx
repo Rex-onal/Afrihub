@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Card } from '../components/ui/Card';
 import { ContactForm } from '../components/forms/ContactForm';
@@ -29,16 +30,10 @@ const REGIONAL_NODES = [
 export const ContactPage: React.FC = () => {
   return (
     <PageWrapper>
-      {/* Per-page SEO & Meta tags */}
-      <title>Contact Us | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="Get in touch with AfriHub. Reach out to our continental operations desk in Abuja, Nigeria and regional nodes across Africa."
-      />
-      <meta property="og:title" content="Contact Us | AfriHub Tech Community" />
-      <meta
-        property="og:description"
-        content="Direct communication channels for African builders, prospective partners, and researchers."
+      <SEO
+        title="Contact Us"
+        description="Get in touch with AfriHub. Reach out to our continental operations desk in Abuja, Nigeria and regional nodes across Africa."
+        path="/contact"
       />
 
       {/* Hero & Channels Section */}

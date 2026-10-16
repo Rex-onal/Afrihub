@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
@@ -27,16 +28,10 @@ const ICON_MAP = {
 export const WhatWeDoPage: React.FC = () => {
   return (
     <PageWrapper>
-      {/* Per-page SEO & Meta tags */}
-      <title>What We Do | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="Discover AfriHub's four pillars: Hackathons & Challenges, Scholarships, Technical Events, and our Career & Internship Network across 54 African nations."
-      />
-      <meta property="og:title" content="What We Do | AfriHub Tech Community" />
-      <meta
-        property="og:description"
-        content="Explore AfriHub's four foundational programmes empowering pan-African builders."
+      <SEO
+        title="What We Do"
+        description="Discover AfriHub's four pillars: Hackathons & Challenges, Scholarships, Technical Events, and our Career & Internship Network across 54 African nations."
+        path="/what-we-do"
       />
 
       {/* Hero Section */}

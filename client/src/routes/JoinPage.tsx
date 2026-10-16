@@ -1,5 +1,6 @@
 import React from 'react';
 import { PageWrapper } from '../components/layout/PageWrapper';
+import { SEO } from '../components/layout/SEO';
 import { Container } from '../components/layout/Container';
 import { Card } from '../components/ui/Card';
 import { JoinForm } from '../components/forms/JoinForm';
@@ -65,16 +66,10 @@ const BENEFIT_CARDS = [
 export const JoinPage: React.FC = () => {
   return (
     <PageWrapper>
-      {/* Per-page SEO & Meta tags */}
-      <title>Join the Community | AfriHub Tech Community</title>
-      <meta
-        name="description"
-        content="Join Africa's fastest-growing tech community. Free membership for developers, data scientists, and designers across 54 nations."
-      />
-      <meta property="og:title" content="Join the Community | AfriHub Tech Community" />
-      <meta
-        property="og:description"
-        content="Free builder enrolment for pan-African developers, designers, and innovators."
+      <SEO
+        title="Join the Community"
+        description="Join Africa's fastest-growing tech community. Free membership for developers, data scientists, and designers across 54 nations."
+        path="/join"
       />
 
       {/* Hero & Enrolment Section */}

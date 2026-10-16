@@ -319,9 +319,9 @@ export const HeroSection: React.FC = () => {
                   <div className="flex items-center gap-3">
                     <span className="w-3 h-3 rounded-full bg-[#006C4C] animate-ping" />
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-[#1C1B1B] font-sans">
+                      <p className="text-xs sm:text-sm font-bold text-[#1C1B1B] font-sans">
                         Live: Co-Create Naija Sprint
-                      </h4>
+                      </p>
                       <p className="text-[11px] text-[#524534] font-sans">
                         Lagos · Nairobi · Remote Hubs
                       </p>

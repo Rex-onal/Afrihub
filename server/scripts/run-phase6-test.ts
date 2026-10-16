@@ -5,9 +5,9 @@ dotenv.config();
 process.env.DATABASE_URL = process.env.DATABASE_URL_TEST;
 
 import request from 'supertest';
-import { app } from '../app.js';
-import { createDb } from '../db/client.js';
-import { communityMembers, partnerEnquiries, contactMessages } from '../db/schema.js';
+import { app } from '../src/app.js';
+import { createDb } from '../src/db/client.js';
+import { communityMembers, partnerEnquiries, contactMessages } from '../src/db/schema.js';
 import { eq } from 'drizzle-orm';
 
 async function runTests() {
@@ -48,13 +48,17 @@ async function runTests() {
   }
   console.log(`✓ Confirmed in Postgres TEST branch: Member id=${savedMembers[0].id}, email=${savedMembers[0].email}, track=${savedMembers[0].track}`);
 
-  // Test duplicate email on /api/join returns 409
+  // 3. Test duplicate email on /api/join returns exact 409 copy
   console.log('\n[3/6] Testing duplicate email 409 on POST /api/join...');
   const dupJoinRes = await request(app).post('/api/join').send(joinPayload);
   if (dupJoinRes.status !== 409) {
     throw new Error(`Expected 409 on duplicate email, got ${dupJoinRes.status}: ${JSON.stringify(dupJoinRes.body)}`);
   }
-  console.log(`✓ Duplicate join returned 409: "${dupJoinRes.body.error}"`);
+  const expected409 = 'This email is already registered with AfriHub. Contact us if you need help.';
+  if (dupJoinRes.body.error !== expected409) {
+    throw new Error(`Expected error "${expected409}", got "${dupJoinRes.body.error}"`);
+  }
+  console.log(`✓ Duplicate join returned exact approved 409 message: "${dupJoinRes.body.error}"`);
 
   // 4. Test valid POST /api/partners
   console.log('\n[4/6] Testing valid POST /api/partners...');
@@ -131,7 +135,6 @@ async function runTests() {
   console.log('\n[7/7] Proving Postgres rejects an invalid enum value...');
   let pgEnumRejected = false;
   try {
-    // Attempt raw SQL insert with invalid enum value 'invalid_track'
     const neonSql = (db as any).$client;
     await neonSql`
       INSERT INTO community_members (full_name, email, country, track, experience_level, interests)
@@ -153,7 +156,6 @@ async function runTests() {
   await db.delete(partnerEnquiries).where(eq(partnerEnquiries.email, partnerPayload.email));
   await db.delete(contactMessages).where(eq(contactMessages.email, contactPayload.email));
 
-  // Verify deletion
   const remainingMembers = await db.select().from(communityMembers).where(eq(communityMembers.email, joinPayload.email));
   const remainingPartners = await db.select().from(partnerEnquiries).where(eq(partnerEnquiries.email, partnerPayload.email));
   const remainingContacts = await db.select().from(contactMessages).where(eq(contactMessages.email, contactPayload.email));
@@ -164,7 +166,7 @@ async function runTests() {
     throw new Error('Failed to clean up test rows!');
   }
 
-  console.log('\n🎉 ALL PHASE 6 ENDPOINT AND NEON TEST TESTS PASSED PERFECTLY!');
+  console.log('\n🎉 ALL PHASE 6 ENDPOINT AND NEON TESTS PASSED PERFECTLY!');
 }
 
 runTests().catch((err) => {

@@ -21,7 +21,7 @@ export function errorHandler(
   const pgErr = rootErr as { code?: string; message?: string };
   if (pgErr?.code === '23505') {
     res.status(409).json({
-      error: 'Conflict: A registration with this email already exists.',
+      error: 'This email is already registered with AfriHub. Contact us if you need help.',
     });
     return;
   }

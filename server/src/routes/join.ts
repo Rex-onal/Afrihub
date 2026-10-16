@@ -36,7 +36,7 @@ joinRouter.post('/join', async (req: Request, res: Response, next: NextFunction)
     const rootErr = (error as any)?.cause || error;
     if (rootErr?.code === '23505') {
       res.status(409).json({
-        error: 'A member with this email address already exists.',
+        error: 'This email is already registered with AfriHub. Contact us if you need help.',
       });
       return;
     }

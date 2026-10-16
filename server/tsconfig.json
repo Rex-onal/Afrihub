@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "..",
+    "paths": {
+      "@afrihub/shared": ["../shared/src/index.ts"],
+      "@afrihub/shared/*": ["../shared/src/*"]
+    }
+  },
+  "include": ["src/**/*"]
+}

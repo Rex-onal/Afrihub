@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" fill="none">
+  <circle cx="18" cy="24" r="16" fill="#F5A623"/>
+  <path d="M10 24L18 18L26 24L18 30L10 24Z" fill="#1C1B1B"/>
+  <text x="44" y="24" font-family="DM Sans, sans-serif" font-weight="700" font-size="13" fill="#1C1B1B" letter-spacing="-0.02em">SAHARA</text>
+  <text x="44" y="36" font-family="DM Sans, sans-serif" font-weight="500" font-size="9" fill="#835500" letter-spacing="0.08em">OPEN ACADEMY</text>
+</svg>

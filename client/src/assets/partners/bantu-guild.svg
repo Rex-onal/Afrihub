@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" fill="none">
+  <rect x="2" y="8" width="32" height="32" rx="8" fill="#524534"/>
+  <path d="M11 24H25M18 17V31" stroke="#86F8C6" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="44" y="24" font-family="DM Sans, sans-serif" font-weight="700" font-size="13" fill="#1C1B1B" letter-spacing="-0.02em">BANTU</text>
+  <text x="44" y="36" font-family="DM Sans, sans-serif" font-weight="500" font-size="9" fill="#524534" letter-spacing="0.08em">ENGINEERING GUILD</text>
+</svg>

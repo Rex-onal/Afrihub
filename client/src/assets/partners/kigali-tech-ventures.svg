@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" fill="none">
+  <circle cx="18" cy="24" r="16" fill="#006C4C"/>
+  <path d="M14 18V30M14 24L22 18M14 24L22 30" stroke="#86F8C6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="44" y="24" font-family="DM Sans, sans-serif" font-weight="700" font-size="13" fill="#1C1B1B" letter-spacing="-0.02em">KIGALI</text>
+  <text x="44" y="36" font-family="DM Sans, sans-serif" font-weight="500" font-size="9" fill="#524534" letter-spacing="0.08em">TECH VENTURES</text>
+</svg>

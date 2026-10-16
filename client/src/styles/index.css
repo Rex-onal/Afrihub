@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #FCF9F8;
+  --color-surface: #FCF9F8;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-container-low: #F6F3F2;
+  --color-surface-container: #F0EDEC;
+  --color-surface-container-high: #EBE7E7;
+  --color-surface-container-highest: #E5E2E1;
+  
+  /* Primary deep gold text (WCAG AA compliant against sand background) */
+  --color-primary: #835500;
+  /* Primary gold container fill (for buttons, chips, icons, accents) */
+  --color-primary-container: #F5A623;
+  
+  --color-on-surface: #1C1B1B;
+  --color-on-surface-variant: #524534;
+  --color-outline: #857462;
+  --color-outline-variant: #D7C3AE;
+  
+  --color-secondary: #006C4C;
+  --color-secondary-container: #86F8C6;
+  
+  --color-tertiary: #006492;
+  --color-tertiary-container: #5EBFFF;
+  
+  --color-coral: #E8572A;
+  
+  --color-inverse-surface: #1C1B1B;
+  --color-inverse-on-surface: #F3F0EF;
+  
+  --color-error: #BA1A1A;
+  --color-error-container: #FFDAD6;
+
+  --font-serif: Domine, Georgia, serif;
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --radius-card: 20px;
+  --radius-input: 12px;
+
+  --shadow-card: 0 10px 30px rgba(28, 27, 27, 0.05);
+  --shadow-card-hover: 0 18px 40px rgba(28, 27, 27, 0.10);
+}
+
+@layer utilities {
+  .text-display-hero {
+    font-family: var(--font-serif);
+    font-size: 3.75rem;
+    line-height: 4.25rem;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
+  .text-display-hero-mobile {
+    font-family: var(--font-serif);
+    font-size: 2.25rem;
+    line-height: 2.75rem;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  .text-headline-lg {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    line-height: 3rem;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  .text-headline-md {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+  .text-headline-sm {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+  }
+  .text-eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+}

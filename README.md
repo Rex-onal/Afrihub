@@ -4,7 +4,7 @@ AfriHub is a pan-African tech community that unites tech talent across all 54 Af
 
 The website is a **showcase and conversion site** designed to put AfriHub in front of developers, partners, and the global tech ecosystem, converting visitors into community members, partner organisations, and general contacts.
 
-This repository is built as an npm workspaces monorepo containing the React 19 frontend (`client/`), Express 5 API backend (`server/`), and shared Zod validation contracts (`shared/`).
+This repository is built as an npm workspaces monorepo containing the React 19 frontend (`frontend/`), Express 5 API backend (`backend/`), and shared Zod validation contracts (`shared/`).
 
 ---
 
@@ -17,7 +17,7 @@ This repository is built as an npm workspaces monorepo containing the React 19 f
 - **Formatting & Linting:** `eslint` (^10.12.0), `typescript-eslint` (^8.71.2), `prettier` (^3.9.10)
 - **TypeScript:** `typescript` (^6.0.3) across all packages
 
-### Frontend (`@afrihub/client`)
+### Frontend (`@afrihub/frontend`)
 - **Core Framework:** React 19 (`19.3.1`) & React DOM (`19.3.1`)
 - **Build Tooling:** Vite (`8.3.4`)
 - **Routing:** React Router DOM (`7.18.4`)
@@ -28,7 +28,7 @@ This repository is built as an npm workspaces monorepo containing the React 19 f
 - **Automated Accessibility Testing:** `axe-core` (`4.14.0`), `vitest-axe` (`0.1.0`)
 - **Unit Testing:** `vitest` (`5.0.4`), `@testing-library/react` (`16.3.3`), `jsdom` (`30.1.3`)
 
-### Backend (`@afrihub/server`)
+### Backend (`@afrihub/backend`)
 - **Runtime:** Node.js with Express 5 (`5.3.0`)
 - **Database Engine:** Neon Serverless PostgreSQL (`@neondatabase/serverless` ^1.2.0)
 - **ORM & Migrations:** `drizzle-orm` (`0.45.4`), `drizzle-kit` (`0.31.11`)
@@ -57,7 +57,7 @@ afrihub/
         contact.ts          # ContactForm schema (category, subject, message, newsletter, honeypot)
       index.ts              # Shared contract entry point
     tsconfig.json
-  client/                   # React 19 client application
+  frontend/                 # React 19 frontend application
     public/                 # Favicons (SVG, PNG, ICO), og-image.png, robots.txt, sitemap.xml
     src/
       main.tsx              # Application entry point
@@ -74,7 +74,7 @@ afrihub/
       __tests__/            # Accessibility (axe), unit, and form integration tests
     vite.config.ts
     tsconfig.json
-  server/                   # Express 5 API application
+  backend/                  # Express 5 API application
     src/
       index.ts              # Server bootstrap and port listener
       app.ts                # Express application configuration (cors, helmet, rate limiting)
@@ -101,9 +101,9 @@ afrihub/
 
 ## Environment Variables
 
-All secrets and environment configs reside in `server/.env`. No secrets or environment files are ever committed to version control.
+All secrets and environment configs reside in `backend/.env`. No secrets or environment files are ever committed to version control.
 
-### `server/.env`
+### `backend/.env`
 | Variable | Required | Description |
 |---|---|---|
 | `DATABASE_URL` | Yes | Connection string for Neon **main** branch (`postgres://...ba1yp33z...neon.tech/neondb?sslmode=require`). Used in production and standard dev server. |
@@ -112,7 +112,7 @@ All secrets and environment configs reside in `server/.env`. No secrets or envir
 | `CLIENT_ORIGIN` | Optional | Allowed CORS origins, comma-separated (defaults to `http://localhost:5173,http://localhost:4173`). |
 | `USE_TEST_DB` | Optional | Set to `true` to force the Express server to connect to `TEST_DATABASE_URL` during local preview. |
 
-### `client/.env`
+### `frontend/.env`
 | Variable | Required | Description |
 |---|---|---|
 | `VITE_API_URL` | Optional | Base URL for backend API calls (defaults to `http://localhost:4000`). |
@@ -136,9 +136,9 @@ All secrets and environment configs reside in `server/.env`. No secrets or envir
 3. **Configure environment variables:**
    Copy the example environment file and add your Neon connection strings:
    ```bash
-   cp server/.env.example server/.env
+   cp backend/.env.example backend/.env
    ```
-   Add your `DATABASE_URL` (main branch) and `TEST_DATABASE_URL` (test branch) in `server/.env`.
+   Add your `DATABASE_URL` (main branch) and `TEST_DATABASE_URL` (test branch) in `backend/.env`.
 
 ---
 
@@ -146,18 +146,18 @@ All secrets and environment configs reside in `server/.env`. No secrets or envir
 
 | Script | Command | Purpose |
 |---|---|---|
-| `npm run dev` | `concurrently ...` | Runs client (5173), server (4000), and shared watch concurrently with live hot-reload |
-| `npm run dev:client` | `npm run dev --workspace=@afrihub/client` | Runs Vite development server on port 5173 |
-| `npm run dev:server` | `npm run dev --workspace=@afrihub/server` | Runs Express API server via `tsx watch` |
+| `npm run dev` | `concurrently ...` | Runs frontend (5173), backend (4000), and shared watch concurrently with live hot-reload |
+| `npm run dev:frontend` | `npm run dev --workspace=@afrihub/frontend` | Runs Vite development server on port 5173 |
+| `npm run dev:backend` | `npm run dev --workspace=@afrihub/backend` | Runs Express API server via `tsx watch` |
 | `npm run dev:shared` | `npm run dev --workspace=@afrihub/shared` | Runs TypeScript compilation watch for shared contracts |
-| `npm run typecheck` | `tsc --noEmit` across all workspaces | Strict TypeScript verification across client, server, and shared (zero `any`) |
+| `npm run typecheck` | `tsc --noEmit` across all workspaces | Strict TypeScript verification across frontend, backend, and shared (zero `any`) |
 | `npm run lint` | `eslint "**/*.{ts,tsx,js,jsx}"` | Monorepo ESLint code style and quality validation |
-| `npm test` | Runs both client and server test suites | Executes Vitest client tests and Supertest server API suite |
-| `npm run test:client` | `vitest run` in `client` | Executes client unit, accessibility (axe), and integration tests |
-| `npm run test:server` | `vitest run` in `server` | Executes server API tests strictly against `TEST_DATABASE_URL` |
-| `npm run build` | Builds shared, client, and server | Compiles production bundles for all three workspaces |
+| `npm test` | Runs both frontend and backend test suites | Executes Vitest frontend tests and Supertest backend API suite |
+| `npm run test:frontend` | `vitest run` in `frontend` | Executes frontend unit, accessibility (axe), and integration tests |
+| `npm run test:backend` | `vitest run` in `backend` | Executes backend API tests strictly against `TEST_DATABASE_URL` |
+| `npm run build` | Builds shared, frontend, and backend | Compiles production bundles for all three workspaces |
 | `npm run check` | Typecheck, lint, test, and build | Comprehensive monorepo validation pipeline |
-| `npm run preview` | Builds and launches preview | Runs built client on port 4173 and built server on port 4000 connected to `TEST_DATABASE_URL` |
+| `npm run preview` | Builds and launches preview | Runs built frontend on port 4173 and built backend on port 4000 connected to `TEST_DATABASE_URL` |
 
 ---
 
@@ -166,11 +166,11 @@ All secrets and environment configs reside in `server/.env`. No secrets or envir
 AfriHub uses Drizzle ORM and Drizzle Kit with serverless Neon PostgreSQL.
 
 ### 1. Generating Migrations
-When schema updates are made in `server/src/db/schema.ts`, generate SQL migrations:
+When schema updates are made in `backend/src/db/schema.ts`, generate SQL migrations:
 ```bash
-npm run db:generate --workspace=@afrihub/server
+npm run db:generate --workspace=@afrihub/backend
 ```
-This generates SQL files in `server/drizzle/` (e.g. `0000_...sql`).
+This generates SQL files in `backend/drizzle/` (e.g. `0000_...sql`).
 
 ### 2. Applying Migrations
 Apply migrations across database branches using Drizzle Kit:
@@ -184,7 +184,7 @@ DATABASE_URL="postgresql://..." npx drizzle-kit migrate
 Migration state is tracked in PostgreSQL inside the `drizzle.__drizzle_migrations` journal table with SHA-256 migration hashes.
 
 ### 3. The Isolated Test Branch
-All automated test runs and manual preview runs are strictly isolated to `TEST_DATABASE_URL`. The server test suite automatically enforces this check and will abort if `TEST_DATABASE_URL` is missing or accidentally matches `DATABASE_URL`.
+All automated test runs and manual preview runs are strictly isolated to `TEST_DATABASE_URL`. The backend test suite automatically enforces this check and will abort if `TEST_DATABASE_URL` is missing or accidentally matches `DATABASE_URL`.
 
 ---
 
@@ -192,7 +192,7 @@ All automated test runs and manual preview runs are strictly isolated to `TEST_D
 
 The project enforces automated test coverage across both frontend and backend.
 
-### Frontend Testing (`client/src/__tests__`)
+### Frontend Testing (`frontend/src/__tests__`)
 - **Automated Axe Accessibility (WCAG 2.1 AA):** Tests all 9 site routes and standalone forms using `axe-core` and `vitest-axe` to guarantee zero accessibility violations.
 - **Component Unit Tests:**
   - `Navbar.test.tsx`: Desktop and mobile navigation drawer, ARIA states, keyboard traps.
@@ -205,7 +205,7 @@ The project enforces automated test coverage across both frontend and backend.
   - Inline error rendering on 400 validation failures.
   - User-friendly error messaging on 409 conflict and 429 rate limit errors.
 
-### Backend API Testing (`server/tests/server.test.ts`)
+### Backend API Testing (`backend/tests/server.test.ts`)
 - Runs strictly against Neon `TEST_DATABASE_URL`.
 - **Health:** Verifies `GET /api/health` returns status `200 { status: 'ok' }`.
 - **Valid Submissions:** Submits valid data to `/api/join`, `/api/partners`, and `/api/contact`, confirming HTTP 201 and record persistence in Neon.
@@ -225,8 +225,8 @@ To launch all monorepo workspaces in development mode:
 ```bash
 npm run dev
 ```
-- Client runs at: `http://localhost:5173`
-- API server runs at: `http://localhost:4000`
+- Frontend runs at: `http://localhost:5173`
+- Backend API runs at: `http://localhost:4000`
 - API Health check: `http://localhost:4000/api/health`
 
 ### Production Preview Server
@@ -234,8 +234,8 @@ To test the built production bundle locally connected to the Neon test branch:
 ```bash
 npm run preview
 ```
-- Client preview runs at: `http://localhost:4173`
-- API server runs at: `http://localhost:4000` (connected to `TEST_DATABASE_URL`)
+- Frontend preview runs at: `http://localhost:4173`
+- Backend API runs at: `http://localhost:4000` (connected to `TEST_DATABASE_URL`)
 - Any form submissions submitted during preview are stored in the test branch, keeping the main branch pristine.
 
 ---
@@ -252,7 +252,7 @@ npm run preview
 All media and geographic assets utilized across AfriHub are open-licensed and documented below matching the `/credits` route:
 
 ### 1. Africa Geographic Continent Map & Silhouette
-- **Asset:** `client/src/assets/africa-map.svg`
+- **Asset:** `frontend/src/assets/africa-map.svg`
 - **Source:** [Wikimedia Commons: File:BlankMap-Africa.svg](https://commons.wikimedia.org/wiki/File:BlankMap-Africa.svg)
 - **License:** Public Domain ([CC Public Domain Dedication](https://commons.wikimedia.org/wiki/Help:Public_domain) / released into the public domain worldwide by its author Lokal_Profil, without conditions; no attribution required).
 - **Modifications:** Styled with CSS fills `#FCF9F8` and accent strokes `#D7C3AE`. Interactive hub pins placed over key continental hubs (Abuja, Lagos, Nairobi, Kigali, Accra, Johannesburg).

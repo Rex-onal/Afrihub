@@ -1,5 +1,5 @@
 {
-  "name": "@afrihub/server",
+  "name": "@afrihub/backend",
   "version": "1.0.0",
   "private": true,
   "type": "module",

@@ -11,7 +11,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@afrihub/shared': path.resolve(__dirname, '../shared/src'),
+      '@afrihub/shared': path.resolve(import.meta.dirname, '../shared/src'),
     },
   },
 });

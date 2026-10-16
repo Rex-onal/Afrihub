@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import sharp from 'sharp';
 
-const publicDir = path.resolve(process.cwd(), 'client/public');
+const publicDir = path.resolve(process.cwd(), 'frontend/public');
 if (!fs.existsSync(publicDir)) {
   fs.mkdirSync(publicDir, { recursive: true });
 }
@@ -202,7 +202,7 @@ fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemapXml, 'utf-8');
 console.log('Created sitemap.xml');
 
 // 6. Copy hero-1.webp to public for preloading
-const heroSource = path.resolve(process.cwd(), 'client/src/assets/hero/hero-1.webp');
+const heroSource = path.resolve(process.cwd(), 'frontend/src/assets/hero/hero-1.webp');
 if (fs.existsSync(heroSource)) {
   fs.copyFileSync(heroSource, path.join(publicDir, 'hero-1.webp'));
   console.log('Copied hero-1.webp to public directory');

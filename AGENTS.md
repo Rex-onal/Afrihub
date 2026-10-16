@@ -34,7 +34,7 @@ AfriHub is a fictional community. All contact details must be obvious placeholde
 
 ## 3. Tech stack (fixed, do not substitute)
 
-### Frontend (`/client`)
+### Frontend (`/frontend`)
 - React 19 with TypeScript
 - Vite
 - React Router (client-side routing)
@@ -44,7 +44,7 @@ AfriHub is a fictional community. All contact details must be obvious placeholde
 - Framer Motion for subtle animation only (optional)
 - Three.js / React Three Fiber only if a Stitch screen clearly requires a 3D element. Do not add it otherwise.
 
-### Backend (`/server`)
+### Backend (`/backend`)
 - Node.js with Express and TypeScript
 - Neon (serverless Postgres) via `@neondatabase/serverless`
 - Drizzle ORM and Drizzle Kit for schema and migrations
@@ -63,10 +63,10 @@ AfriHub is a fictional community. All contact details must be obvious placeholde
 afrihub/
   AGENTS.md
   DESIGN.md
-  package.json            # npm workspaces: client, server, shared
+  package.json            # npm workspaces: frontend, backend, shared
   shared/
     src/schemas/          # Zod schemas shared by client and server
-  client/
+  frontend/
     index.html
     src/
       main.tsx
@@ -80,7 +80,7 @@ afrihub/
       lib/                # api client, helpers
       styles/
       assets/
-  server/
+  backend/
     src/
       index.ts            # app bootstrap
       app.ts              # express app (exported for tests)
@@ -112,7 +112,7 @@ If a page has no Stitch screen yet, build it from existing components and the de
 
 ## 6. Content
 
-Display content (events, team, stats, partners, programmes) is **static typed data** in `client/src/content/`. Do not create database tables or GET endpoints for it. Shape the data so it could be moved behind an API later without changing components.
+Display content (events, team, stats, partners, programmes) is **static typed data** in `frontend/src/content/`. Do not create database tables or GET endpoints for it. Shape the data so it could be moved behind an API later without changing components.
 
 ## 7. Backend: forms only
 
@@ -148,14 +148,14 @@ The backend has one job: receive form submissions, validate them and store them 
 
 ### Environment variables
 
-`server/.env.example`
+`backend/.env.example`
 ```
 DATABASE_URL=postgresql://user:password@host/db?sslmode=require
 PORT=4000
 CLIENT_ORIGIN=http://localhost:5173
 ```
 
-`client/.env.example`
+`frontend/.env.example`
 ```
 VITE_API_URL=http://localhost:4000
 ```

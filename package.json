@@ -6,22 +6,26 @@
   "description": "AfriHub - Pan-African Tech Community Showcase Website",
   "workspaces": [
     "shared",
-    "client",
-    "server"
+    "frontend",
+    "backend"
   ],
   "scripts": {
-    "dev": "concurrently -n \"shared,client,server\" -c \"yellow,cyan,magenta\" \"npm run dev --workspace=@afrihub/shared\" \"npm run dev --workspace=@afrihub/client\" \"npm run dev --workspace=@afrihub/server\"",
+    "dev": "concurrently -n \"shared,frontend,backend\" -c \"yellow,cyan,magenta\" \"npm run dev --workspace=@afrihub/shared\" \"npm run dev --workspace=@afrihub/frontend\" \"npm run dev --workspace=@afrihub/backend\"",
     "dev:shared": "npm run dev --workspace=@afrihub/shared",
-    "dev:client": "npm run dev --workspace=@afrihub/client",
-    "dev:server": "npm run dev --workspace=@afrihub/server",
-    "build": "npm run build --workspace=@afrihub/shared && npm run build --workspace=@afrihub/client && npm run build --workspace=@afrihub/server",
+    "dev:frontend": "npm run dev --workspace=@afrihub/frontend",
+    "dev:backend": "npm run dev --workspace=@afrihub/backend",
+    "dev:client": "npm run dev:frontend",
+    "dev:server": "npm run dev:backend",
+    "build": "npm run build --workspace=@afrihub/shared && npm run build --workspace=@afrihub/frontend && npm run build --workspace=@afrihub/backend",
     "lint": "eslint \"**/*.{ts,tsx,js,jsx}\"",
-    "typecheck": "npm run typecheck --workspace=@afrihub/shared && npm run typecheck --workspace=@afrihub/client && npm run typecheck --workspace=@afrihub/server",
-    "test": "npm run test:client && npm run test:server",
-    "test:client": "npm run test --workspace=@afrihub/client",
-    "test:server": "npm run test --workspace=@afrihub/server",
+    "typecheck": "npm run typecheck --workspace=@afrihub/shared && npm run typecheck --workspace=@afrihub/frontend && npm run typecheck --workspace=@afrihub/backend",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "npm run test --workspace=@afrihub/frontend",
+    "test:backend": "npm run test --workspace=@afrihub/backend",
+    "test:client": "npm run test:frontend",
+    "test:server": "npm run test:backend",
     "check": "npm run typecheck && npm run lint && npm run test && npm run build",
-    "preview": "npm run build && USE_TEST_DB=true concurrently -n \"server,client\" -c \"magenta,cyan\" \"npm run start --workspace=@afrihub/server\" \"npm run preview --workspace=@afrihub/client -- --port 4173 --host\"",
+    "preview": "npm run build && USE_TEST_DB=true concurrently -n \"backend,frontend\" -c \"magenta,cyan\" \"npm run start --workspace=@afrihub/backend\" \"npm run preview --workspace=@afrihub/frontend -- --port 4173 --host\"",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "devDependencies": {

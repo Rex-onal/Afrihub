@@ -12,8 +12,10 @@ build/
 .env
 .env.local
 .env.*.local
-server/.env
-server/.env.test
+backend/.env
+backend/.env.test
+frontend/.env
+frontend/.env.test
 
 # Logs & temp files
 npm-debug.log*

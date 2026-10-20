@@ -2,6 +2,7 @@ import { Router, type Request, type Response, type NextFunction } from 'express'
 import { partnerSchema } from '@afrihub/shared';
 import { db } from '../db/client.js';
 import { partnerEnquiries } from '../db/schema.js';
+import { logger } from '../lib/logger.js';
 
 export const partnersRouter: Router = Router();
 
@@ -11,6 +12,7 @@ partnersRouter.post('/partners', async (req: Request, res: Response, next: NextF
 
     if (!parseResult.success) {
       const fieldErrors = parseResult.error.flatten().fieldErrors;
+      logger.warn({ event: 'validation_failed', route: '/api/partners', fieldKeys: Object.keys(fieldErrors) });
       res.status(400).json({
         error: 'Validation failed',
         details: fieldErrors,

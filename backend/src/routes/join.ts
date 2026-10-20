@@ -2,6 +2,7 @@ import { Router, type Request, type Response, type NextFunction } from 'express'
 import { joinSchema } from '@afrihub/shared';
 import { db } from '../db/client.js';
 import { communityMembers } from '../db/schema.js';
+import { logger } from '../lib/logger.js';
 
 export const joinRouter: Router = Router();
 
@@ -11,6 +12,7 @@ joinRouter.post('/join', async (req: Request, res: Response, next: NextFunction)
 
     if (!parseResult.success) {
       const fieldErrors = parseResult.error.flatten().fieldErrors;
+      logger.warn({ event: 'validation_failed', route: '/api/join', fieldKeys: Object.keys(fieldErrors) });
       res.status(400).json({
         error: 'Validation failed',
         details: fieldErrors,

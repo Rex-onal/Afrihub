@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      # Tests need a Neon test branch. If TEST_DATABASE_URL is not configured in
+      # repo secrets, skip with a warning rather than fail — tests cannot run
+      # without a real Postgres branch (safety guard refuses TEST==MAIN).
+      - name: Test
+        env:
+          TEST_DATABASE_URL: ${{ secrets.TEST_DATABASE_URL }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: |
+          if [ -z "$TEST_DATABASE_URL" ]; then
+            echo "::warning::TEST_DATABASE_URL secret not set — skipping test suite"
+          else
+            npm test
+          fi
+
+      - name: Audit production dependencies
+        run: npm audit --audit-level=high --omit=dev

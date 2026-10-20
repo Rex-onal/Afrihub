@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "description": "AfriHub - Pan-African Tech Community Showcase Website",
+  "engines": {
+    "node": ">=20"
+  },
   "workspaces": [
     "shared",
     "frontend",

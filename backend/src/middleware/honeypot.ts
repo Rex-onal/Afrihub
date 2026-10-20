@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
+import { logger } from '../lib/logger.js';
 
 /**
  * Honeypot middleware.
@@ -7,6 +8,7 @@ import type { Request, Response, NextFunction } from 'express';
 export function honeypotCheck(req: Request, res: Response, next: NextFunction): void {
   const website = req.body?.website;
   if (website && typeof website === 'string' && website.trim() !== '') {
+    logger.warn({ event: 'honeypot_hit', ip: req.ip, path: req.path });
     res.status(201).json({ message: 'Submission received successfully' });
     return;
   }

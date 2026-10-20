@@ -1,7 +1,7 @@
+import './config/env.js';
 import express, { type Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import dotenv from 'dotenv';
 import { healthRouter } from './routes/health.js';
 import { joinRouter } from './routes/join.js';
 import { partnersRouter } from './routes/partners.js';
@@ -9,18 +9,30 @@ import { contactRouter } from './routes/contact.js';
 import { honeypotCheck } from './middleware/honeypot.js';
 import { postRateLimiter } from './middleware/rate-limiter.js';
 import { errorHandler } from './middleware/error-handler.js';
-
-dotenv.config();
+import { notFoundHandler } from './middleware/not-found.js';
+import { httpsRedirect } from './middleware/https-redirect.js';
 
 export const app: Express = express();
 
-// Trust proxy for reverse proxies and IP resolution
 app.set('trust proxy', 1);
+app.disable('x-powered-by');
 
-// Security headers
-app.use(helmet());
+// Force HTTPS in production behind a trusted proxy. No-op in dev/test.
+app.use(httpsRedirect);
 
-// Cross-Origin Resource Sharing locked to CLIENT_ORIGIN (always allowing dev: 5173 and preview: 4173)
+// Security headers. CSP is disabled: this app serves JSON only, no HTML,
+// and the frontend is served from a separate origin that owns its own CSP.
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    crossOriginResourcePolicy: { policy: 'same-site' },
+    referrerPolicy: { policy: 'no-referrer' },
+    hsts: { maxAge: 15552000, includeSubDomains: true },
+  })
+);
+
+// CORS allowlist. Dev (5173) and preview (4173) are always allowed; extra prod
+// origins come from CLIENT_ORIGIN (comma-separated).
 const customOrigins = process.env.CLIENT_ORIGIN
   ? process.env.CLIENT_ORIGIN.split(',').map((o) => o.trim())
   : [];
@@ -41,16 +53,12 @@ app.use(
   })
 );
 
-// Body parser
-app.use(express.json());
+// 10 KB cap: all three forms are small JSON bodies; anything larger is abuse.
+app.use(express.json({ limit: '10kb' }));
 
-// 1. Health check route (unthrottled, public)
 app.use('/api', healthRouter);
-
-// 2. Honeypot check on all submission endpoints (silent 201)
 app.use('/api', honeypotCheck);
 
-// 3. Rate limiting strictly on POST endpoints (5 req/min per IP)
 app.use((req, res, next) => {
   if (req.method === 'POST') {
     return postRateLimiter(req, res, next);
@@ -58,12 +66,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// 4. Form submission endpoints
 app.use('/api', joinRouter);
 app.use('/api', partnersRouter);
 app.use('/api', contactRouter);
 
-// 5. Centralized error handling
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 export default app;
